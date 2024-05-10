@@ -4,17 +4,29 @@
 //
 //  Created by Tsuji Kota on 29.04.2024.
 //
-
+import UserNotifications
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]){
+            (granted, error) in
+        }
+        center.delegate = self
         return true
+        
+    }
+        
+        func userNotifiationCenter(_ center: UNUserNotificationCenter, willPresent notification : UNNotification, withCompletionHandler completionHandler : @escaping (UNNotificationPresentationOptions) -> Void) {
+            completionHandler([.banner, .list, .sound])
+        }
     }
 
     // MARK: UISceneSession Lifecycle
@@ -32,5 +44,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-}
+
 
